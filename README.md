@@ -1,2 +1,2 @@
 # alwp-smtp-server
-Plugin WordPress per abilitare l'utilizzo di SMTP
+Plugin WordPress per abilitare e configurare SMTP
