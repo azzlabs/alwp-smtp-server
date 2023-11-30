@@ -10,7 +10,7 @@ defined( 'ABSPATH' ) or die( 'Plugin file cannot be accessed directly.' );
 
 function alwp_smtp_add_menu_entry() { 
     // Registra la voce menu
-    add_submenu_page('options-general.php', 'Impostazioni server SMTP', 'Server SMTP', 'administrator', 'alwp-smtp-server', 'alwp_smtp_settings_page');
+    add_submenu_page('options-general.php', __('Impostazioni server SMTP', 'alwp'), __('Server SMTP', 'alwp'), 'administrator', 'alwp-smtp-server', 'alwp_smtp_settings_page');
     // Registra i campi delle impostazioni di WP
     add_action('admin_init', 'alwp_smtp_register_settings');
 }
@@ -33,7 +33,7 @@ add_action('admin_menu', 'alwp_smtp_add_menu_entry');
 
 function alwp_smtp_settings_page() { ?>
     <div class="wrap">
-        <h1>Impostazioni server SMTP</h1>
+        <h1><?php _e('Impostazioni server SMTP', 'alwp') ?></h1>
     
         <form method="post" action="options.php">
             <?php settings_fields('alwp_settings_group'); ?>
@@ -103,10 +103,6 @@ function alwp_smtp_settings_page() { ?>
 
 <?php } 
 
-ini_set('display_errors', 1);
-ini_set('display_startup_errors', 1);
-error_reporting(E_ALL);
-
 add_action('phpmailer_init', 'alwp_smtp_phpmailer_init');
 function alwp_smtp_phpmailer_init( PHPMailer\PHPMailer\PHPMailer $phpmailer ) {
     if (get_option('alwp_smtp_enabled')) {
@@ -117,9 +113,6 @@ function alwp_smtp_phpmailer_init( PHPMailer\PHPMailer\PHPMailer $phpmailer ) {
         $phpmailer->SMTPAuth = get_option('alwp_smtp_smtpauth') == 1; // if required
         $phpmailer->SMTPSecure = get_option('alwp_smtp_smtpsecure'); // enable if required, 'tls' is another possible value
         $phpmailer->SMTPAutoTLS = get_option('alwp_smtp_smtpautotls');
-        $phpmailer->SMTPDebug = 1; 
-        //var_dump($phpmailer);
-        //die();
         
         $phpmailer->IsSMTP();
     }
